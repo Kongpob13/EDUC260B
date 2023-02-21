@@ -1,0 +1,158 @@
+---
+title: "Problemset 3"
+author: "Kongpob Lee"
+date: "2023-01-28"
+output:
+  pdf_document: default
+  html_document: default
+bibliography: /Users/gongpobleemingsawat/Desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS3_Directory/bib/references.bib
+link-citations: yes 
+csl: /Users/gongpobleemingsawat/Desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS3_Directory/bib/apa.csl
+---
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, warning = F, message = F, out.width = '75%', fig.align = 'center')
+
+# Load libraries
+
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(knitr)
+library(kableExtra)
+
+# Directory paths
+data_dir <- "/Users/gongpobleemingsawat/Desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS3_Directory/analysis/files"
+```
+
+## -----------------------------------------------------------------------------
+## Part III - RMarkdown report and citations
+## -----------------------------------------------------------------------------
+
+# About the data 
+
+The data contains information from the 1990 California census in which it indicates basic information about housing in California, including location of the houses, median value of the houses, households income, population, median income, etc [@housing]. 
+
+Question 6
+```{r}
+# 6.1
+list.files(data_dir)
+
+# 6.2
+housing_df <- readRDS(file.path(data_dir, "housing.RDS"))
+
+# 6.3
+housing_df %>%
+head(10) %>%
+kable() %>%
+kable_styling(latex_options = c('scale_down', 'HOLD_position'))
+```
+
+## -----------------------------------------------------------------------------
+## Part IV - Creating and customizing plots
+## -----------------------------------------------------------------------------
+
+# Data analysis
+
+Question 1
+
+Observation: the data indicates that most of the houses with high media house value were located in land (not close the ocean), this is a little bit different from today because houses near ocean are (probably) more expensive than houses located in land. 
+```{r}
+
+ggplot(housing_df, aes(x = median_income, y = median_house_value, color = ocean_proximity)) + 
+  geom_point() + 
+  ggtitle("Median Income VS Median House Value") + 
+  xlab("Median Income") + ylab("Median House Value") + 
+  scale_color_brewer(palette = "Spectral", direction = -1) +
+  scale_x_continuous(labels = label_number(prefix = "$", suffix = "K", accuracy = 1)) +
+  scale_y_continuous(labels = label_number(prefix = "$", suffix = "K", scale = 1e-2, accuracy = 1)) +
+  theme_minimal()
+
+```
+
+Question 2
+
+Observation: When plotting data separately based on ocean_proximity -- we can see that houses located near Bay had even less media house value than houses located near ocean. I assume that living near the ocean or the beach in the past might not be as convenience as today, which explains why the prices were lower in the past. 
+```{r}
+
+ggplot(housing_df, aes(x = median_income, y = median_house_value)) + 
+  geom_point() + 
+  ggtitle("Median Income VS Median House Value") + 
+  xlab("Median Income") + ylab("Median House Value") + 
+  scale_x_continuous(labels = label_number(prefix = "$", suffix = "K", accuracy = 1)) +
+  scale_y_continuous(labels = label_number(prefix = "$", suffix = "K", scale = 1e-2, accuracy = 1)) +
+  facet_wrap(~ ocean_proximity) + 
+  theme_minimal()
+
+```
+
+Question 3 
+
+Observation: Looking specifically at location of the houses (longitude and latitude), houses located in land are more likely to locate in higher latitude and longitude. 
+```{r}
+
+ggplot(housing_df, aes(x = longitude, y = latitude, color = ocean_proximity)) +
+  geom_point() + 
+  xlab("Longitude") + ylab("Latitude") + 
+  scale_color_brewer(palette = "Spectral", direction = -1) + 
+  ggtitle("Latitude and Longtitude of the location of the house w.r.t ocean/sea") + 
+  coord_fixed() + 
+  theme_classic()
+
+```
+
+Question 4
+
+Observation: As expected, houses located in land (high longitude and high latitude) had more house value than houses located near the beach or ocean in the past. 
+```{r}
+
+ggplot(housing_df, aes(x = longitude, y = latitude, color = median_house_value)) +
+  geom_point() + 
+  xlab("Longitude") + ylab("Latitude") + 
+  ggtitle("Latitude and Longtitude of the median house value for households within a block") + 
+  scale_color_gradient(low = "#56B1F7", high = "#132B43", name = "house value",
+                       labels = label_number(suffix = "$")) +
+  coord_fixed() + 
+  theme_classic()
+
+```
+
+Question 5
+
+Observation: As expected, the average median house value for the houses located in land (far from the ocean) is much higher than the houses located near bay or ocean! It seems like people like to stay away from the ocean (maybe afraid of the natural disaster?)
+```{r}
+plot <- housing_df %>% group_by(ocean_proximity) %>% 
+  summarize_at(vars(median_house_value), list(average = mean)) 
+
+ggplot(plot, aes(x = ocean_proximity, y = average, fill = ocean_proximity)) +
+  geom_col() + 
+  xlab("location of the house w.r.t ocean/sea") + ylab("average median house value") + 
+  ggtitle("Average Median House Value by Location of the House w.r.t Ocean/Sea") + 
+  scale_y_continuous(labels = label_number(prefix = "$", suffix = 'k', scale = 1e-2, accuracy = 1)) +
+  theme_classic()
+
+```
+
+## -----------------------------------------------------------------------------
+## Part IV - Creating and customizing plots
+## -----------------------------------------------------------------------------
+
+Question 1 - Box plot 
+```{r}
+# Note - I want to plot this with the original set of data
+
+# Download the original plot 
+housing <- read.csv("/Users/gongpobleemingsawat/Desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS3_Directory/data/housing.csv")
+ggplot(housing, mapping = aes(x = ocean_proximity, y = population, fill = ocean_proximity)) +
+  geom_boxplot() +
+  coord_flip() +
+  ggtitle("Total Population by Location of the House w.r.t Ocean/Sea") + 
+  xlab("Location of the house w.r.t ocean/sea") + ylab("Total population") + 
+  theme_classic()
+
+```
+Observation: It seems like most people stayed in the house near the ocean and this is extremely contradicted to what we have assumed from the scatter plot earlier! So, houses with high median value (expensive houses) were located in far from the ocean; however, most people in California cannot afford to those expensive houses, so most of the people were ended up living near the ocean instead. This might be the result of inequality in California area. 
+
+
+# References
+
