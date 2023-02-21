@@ -1,0 +1,227 @@
+---
+title: "Problem Set 2"
+author: "Kongpob Lee"
+date: "2023-01-21"
+output: pdf_document
+---
+
+################################################################################
+##
+## [ PROJ ] < Problem set 2 >
+## [ FILE ] < Problem set 2 >
+## [ AUTH ] < Kongpob Leemingsawat | Kongpob13 >
+## [ AUTH ] < Shun Imazu | shunimazu>
+## [ AUTH ] < Michael Rozen | michaelrozen3>
+## [ INIT ] < 1/21/2023 >
+##
+################################################################################
+
+## ---------------------------
+## libraries
+## ---------------------------
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(labelled)
+```
+
+## ---------------------------
+## directory paths
+## ---------------------------
+
+```{r}
+setwd("/Users/gongpobleemingsawat/Desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS2_Leemingsawat_Kongpob")
+
+data_dir <- file.path('.', 'data')
+plot_dir <- file.path('.', 'output', 'plots')
+file_dir <- file.path('.', 'output', 'files')
+```
+
+## -----------------------------------------------------------------------------
+## Part I: Command line & setting up git repo
+## -----------------------------------------------------------------------------
+
+# Question 3: 
+
+- Command to change directories
+
+pwd 
+cd desktop
+ls 
+cd my_folder
+
+- Command to clone repo
+
+git clone https://github.com/anyone-can-cook/PS2_Leemingsawat_Kongpob.git
+
+# Question 5: 
+
+- Command to list directory contents, including hidden files/directories
+
+ls -a 
+
+- Output 
+
+.               ..              .git            .gitignore      Problemset2.Rmd README.md
+
+# Question 6: 
+
+- Command to create new directories
+
+mkdir -p data output/files scripts 
+cd output 
+mkdir plots 
+
+- Command to create R script
+
+cd scripts 
+touch ps2_script.R
+
+*to set path: cd desktop/MPP/First_Year/Winter_2023/EDUC_260B/PS2_Leemingsawat_Kongpob
+
+## -----------------------------------------------------------------------------
+## Part II - Working with data in R
+## -----------------------------------------------------------------------------
+
+# Question 2: 
+
+```{r}
+# Download data
+download.file(url = 'https://nces.ed.gov/ipeds/datacenter/data/HD2019.zip',
+              destfile = file.path(data_dir, "ps2_file.zip"))
+
+# Unzip file 
+
+unzip(zipfile =  file.path(data_dir, "ps2_file.zip"),
+      exdir = data_dir)
+```
+
+# Question 3: 
+```{r}
+hd <- read_csv(file.path(data_dir, "hd2019.csv"),
+               col_types = cols_only(UNITID = col_character(),
+                                     INSTNM = col_character(),
+                                     STABBR = col_character(),
+                                     LONGITUD = col_double(),
+                                     LATITUDE = col_double()
+                                     ))
+```
+
+# Question 4: 
+
+```{r}
+# Filter 
+
+hd_ca <- hd %>% filter(hd$STABBR == "CA")
+
+# Plot 
+
+png(file.path(plot_dir, 'ca_univs.png'))
+ggplot(hd_ca, aes(x = LATITUDE, y = LONGITUD)) +
+  geom_point() +
+  theme_minimal() +
+  coord_fixed(ratio = 1.5)
+dev.off()
+```
+
+# Question 5: 
+
+```{r}
+write_csv(hd_ca, file = file.path(file_dir, "hd2019_ca.csv"))
+```
+
+## -----------------------------------------------------------------------------
+## Part III - Git & GitHub 
+## -----------------------------------------------------------------------------
+
+# Question 1: 
+
+Answer: git status 
+
+Output: 'Untracked files'
+.
+.
+# Question 2: 
+
+answer: git add 
+
+output: change to be committed 
+.
+.
+# Question 3: 
+
+answer: git commit -m data output scripts 
+
+# Question 4: 
+
+.
+.
+.
+
+# Question 5: 
+
+1. What heading is ‘.gitignore‘ listed under?
+
+Changes not staged for commit
+
+2. Command to show changes made to ‘.gitignore‘
+
+git diff -- .gitignore
+
+3. Output 
+
+# diff --git a/.gitignore b/.gitignore
+index fae8299..6154f65 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,3 +1,7 @@
++#Problem set files
++problemset2.md
++/.DS_Store
+.
+.
+.
+# Question 6: 
+
+git add .gitignore PS2_Leemingsawat_Kongpob
+.
+.
+.
+# Question 7: 
+
+1. command
+
+git log 
+.
+.
+.
+# Question 8: 
+
+1. command
+
+git remote -v 
+
+2. output
+
+origin https://github.com/anyone-can-cook/PS2_Leemingsawat_Kongpob/ (fetch)
+origin https://github.com/anyone-can-cook/PS2_Leemingsawat_Kongpob/ (push)
+.
+.
+.
+# Question 9: 
+
+git push 
+
+## -----------------------------------------------------------------------------
+## Part III - GitHub Issue 
+## -----------------------------------------------------------------------------
+
+1. Paste the url to your issue here:
+https://github.com/anyone-can-cook/rclass2_student_issues_w23/issues/96#issue-1558853048
+2. Paste the url to the issue you responded to here:
+https://github.com/anyone-can-cook/rclass2_student_issues_w23/issues/84#issuecomment-1405736210
+
+## -----------------------------------------------------------------------------
+## END SCRIPT
+## -----------------------------------------------------------------------------
