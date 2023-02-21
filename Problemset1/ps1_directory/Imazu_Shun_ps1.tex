@@ -1,0 +1,691 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Problem Set \#1},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Problem Set \#1}
+\author{}
+\date{\vspace{-2.5em}1/14/2023}
+
+\begin{document}
+\maketitle
+
+\textcolor{red}{\textbf{Grade: /18}}
+
+install.packages(``ggplot'') library(ggplot)
+
+\hypertarget{overview}{%
+\section{Overview}\label{overview}}
+
+In this problem set, you will practice organizing files and folders for
+a new project. You'll also get practice reading and writing data, which
+are common tasks you'll likely encounter in a real-life project. From
+now on you'll be doing all your work in an \textbf{R script} instead of
+an \textbf{R Markdown file}.
+
+\hypertarget{part-i-setting-up-project-directory-and-r-script}{%
+\subsection{Part I: Setting up project directory and R
+script}\label{part-i-setting-up-project-directory-and-r-script}}
+
+\textcolor{red}{\textbf{/0.5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  You'll create a new \textbf{RStudio project} for this problem set:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Open up \textbf{RStudio} and on the top right corner of the window,
+    select \texttt{New\ Project} under the dropdown menu
+  \item
+    Select \texttt{New\ Directory} then \texttt{New\ Project} to create
+    a new project
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \emph{Note}: Selecting \texttt{New\ Directory} means that the
+      folder (i.e., directory) where the R project will live does not
+      yet exist; thus, this step will (A) create the directory named
+      \texttt{ps1\_directory} and (B) create the file named
+      \texttt{ps1\_directory.Rproj} within that directory
+    \item
+      Alternatively, you may manually create the directory named
+      \texttt{ps1\_directory} and then select the
+      \texttt{Existing\ Directory} option
+    \end{itemize}
+  \item
+    Fill in the name of your new project directory (e.g.,
+    \texttt{ps1\_directory}), browse where you want to create the
+    project (e.g., \texttt{Downloads} or \texttt{Documents} folder,
+    etc.), and click \texttt{Create\ Project}
+  \end{itemize}
+
+  \includegraphics[width=4.27083in,height=\textheight]{rstudio_project.png}
+\end{enumerate}
+
+\textcolor{red}{\textbf{/0.5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Download the \textbf{Problem set R script template} available under
+  the \textbf{Syllabus \& Resources} section of the
+  \href{https://anyone-can-cook.github.io/rclass2/}{class website} (or
+  click
+  \href{https://anyone-can-cook.github.io/rclass2/assets/resources/ps_template.R}{here}).
+  Rename the downloaded \texttt{ps\_template.R} to your
+  \texttt{lastname\_firstname\_ps1.R} and save it inside your newly
+  created project directory (e.g., \texttt{ps1\_directory}).
+\end{enumerate}
+
+\textcolor{red}{\textbf{/1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Open your \texttt{lastname\_firstname\_ps1.R} script in
+  \textbf{RStudio} (check the top right corner of the window to make
+  sure you have the \textbf{Rstudio project} you created in the first
+  question opened). Modify the header information of the R script (e.g.,
+  your name, the date, etc.), then load the \texttt{tidyverse},
+  \texttt{readxl}, and \texttt{labelled} libraries under the
+  \textbf{libraries} section of the given template. Don't forget to run
+  your code to load the libraries. (\emph{Hint}: You can run a line of
+  code by clicking on that line and hitting
+  \texttt{ctrl}+\texttt{enter}/\texttt{cmd}+\texttt{enter} on the
+  keyboard)
+\end{enumerate}
+
+install.packages(``labelled'')
+\#\#-------------------------------------- library(tidyverse)
+library(readxl) library(labelled)
+\#\#--------------------------------------
+
+\textcolor{red}{\textbf{/1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  Next, you'll create a few subdirectories inside your project
+  directory. Specifically, you'll create a \texttt{data} folder to
+  contain all raw data you'll be working with and an \texttt{analysis}
+  folder, containing the \texttt{plots} and \texttt{files} subfolders,
+  for storing all your outputs. Your folder structure should look like
+  this:
+
+\begin{verbatim}
+ps1_directory/
+|
+|- data/
+|- analysis/
+   |- plots/
+   |- files/
+|- lastname_firstname_ps1.R
+\end{verbatim}
+
+  You can create these directories in 2 ways: (A) Using the
+  \texttt{dir.create()} function in your \textbf{Console} or (B)
+  Clicking on the \texttt{New\ Folder} button under the \textbf{Files}
+  tab.
+
+  \includegraphics{rstudio_folder.png}
+
+  Once you've created the directories, use \texttt{file.path()} to
+  create directory path objects for them under the \textbf{directory
+  paths} section of your \texttt{lastname\_firstname\_ps1.R}.
+  Specifically, create the following objects (\emph{Hint}: Make sure to
+  write your paths relative to your project directory, and don't forget
+  to run these lines of code after you're done):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{input\_data\_dir}: path to \texttt{data/} folder
+  \item
+    \texttt{output\_plot\_dir}: path to \texttt{plots/} folder
+  \item
+    \texttt{output\_file\_dir}: path to \texttt{files/} folder
+  \end{itemize}
+\end{enumerate}
+
+\#\#-------------------------------------------------------
+input\_data\_dir \textless- file.path(``.'', ``data'') output\_plot\_dir
+\textless- file.path(``.'', ``analysis'', ``plots'') output\_file\_dir
+\textless- file.path(``.'', ``analysis'', ``files'')
+\#\#-------------------------------------------------------
+
+\hypertarget{part-ii-exploring-directory-structure-and-reading-data-files}{%
+\subsection{Part II: Exploring directory structure and reading data
+files}\label{part-ii-exploring-directory-structure-and-reading-data-files}}
+
+\textcolor{red}{\textbf{/1.5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Now, it's time to start writing code in the main body of your
+  \texttt{lastname\_firstname\_ps1.R}. Make sure to add comments in your
+  script (i.e., lines starting with \texttt{\#}) to clearly label which
+  part/question in the problem set you are answering. For this question,
+  your task is to write code to do each of the following:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Print the absolute filepath of your current working directory
+  \item
+    List all folders and files in your current working directory
+  \item
+    List all folders and files inside the \texttt{analysis/} directory
+  \end{itemize}
+
+  Run the code and \textbf{copy the outputs to your R script by adding
+  them as comments under each respective line of code}.
+\end{enumerate}
+
+\#\#--------------------------------------------------- getwd()
+\#``C:/Users/imaim/OneDrive/デスクトップ/23-Winter/260-Programing/Week-1/ps1\_directory''
+list.files() \#'' analysis'' ``data'' ``Imazu\_Shun\_ps1.Rmd''
+``Imazu\_Shun\_ps1.tex'' ``ps1\_directory.Rproj'' list.files(path =
+``./analysis'')
+
+\textcolor{red}{\textbf{/2.5 }}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  So far, all our subdirectories have no files in them. Let's change
+  that! Add code to your \texttt{lastname\_firstname\_ps1.R} to complete
+  the following:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Download the data from
+    \texttt{https://github.com/anyone-can-cook/rclass2/raw/main/data/ps2\_files.zip}
+    into your \texttt{input\_data\_dir}
+  \item
+    Unzip the downloaded zipped folder and make sure the files are
+    extracted into \texttt{input\_data\_dir}
+  \item
+    List the contents of \texttt{input\_data\_dir} and copy the output
+    as a comment in your script
+  \end{itemize}
+\end{enumerate}
+
+\#\#-------------------------------------------------------
+download.file(url =
+``\url{https://github.com/anyone-can-cook/rclass2/raw/main/data/ps2_files.zip}'',
+destfile = file.path(input\_data\_dir, ``ps2\_files.zip''))
+unzip(zipfile = file.path(input\_data\_dir, ``ps2\_files.zip''), exdir =
+input\_data\_dir) list.files(input\_data\_dir)
+\#``college\_scorecard.csv'' ``college\_scorecard\_dict.xlsx''
+``ps2\_files.zip''
+
+\textcolor{red}{\textbf{/1.5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Read in the data from \texttt{college\_scorecard.csv} and name the
+  object \texttt{college\_scorecard\_df}. Specify the arguments in the
+  function you use to read in the data so that the following criteria
+  are met:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Because missing values in the data are represented by
+    \texttt{\textquotesingle{}.\textquotesingle{}}, read in the data so
+    that these values are replaced with \texttt{NA}
+  \item
+    Read in the \texttt{control} column so that it is of
+    \texttt{integer} type
+  \end{itemize}
+\end{enumerate}
+
+\#\#------------------------------------------------------
+college\_scorecard\_df \textless- read\_csv(file =
+file.path(input\_data\_dir, ``college\_scorecard.csv''), col\_types =
+cols(control = col\_integer()),na = ``.'')
+\#\#------------------------------------------------------
+
+\textcolor{red}{\textbf{/2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  Read in the data dictionary from
+  \texttt{college\_scorecard\_dict.xlsx} and name the object
+  \texttt{college\_scorecard\_dict}. Specify the arguments in the
+  function you use to read in the data so that the following criteria
+  are met:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    You are reading in the \texttt{institution\_data\_dictionary} sheet
+  \item
+    Specify the column names to be:
+    \texttt{\textquotesingle{}var\_label\textquotesingle{},\ \textquotesingle{}category\textquotesingle{},\ \textquotesingle{}dev\_name\textquotesingle{},\ \textquotesingle{}data\_type\textquotesingle{},\ \textquotesingle{}var\_name\textquotesingle{},\ \textquotesingle{}val\_name\textquotesingle{},\ \textquotesingle{}val\_label\textquotesingle{},\ \textquotesingle{}source\textquotesingle{},\ \textquotesingle{}notes\textquotesingle{}}
+  \item
+    Since you've specified custom column names, you'll need to skip the
+    first row of data you read in (i.e., the heading row)
+  \end{itemize}
+\end{enumerate}
+
+\#\#--------------------------------------------------------\\
+college\_scorecard\_dict \textless- read\_excel(path =
+file.path(input\_data\_dir, ``college\_scorecard\_dict.xlsx''), sheet =
+``institution\_data\_dictionary'', col\_names = c(`var\_label',
+`category', `dev\_name', `data\_type', `var\_name', `val\_name',
+`val\_label', `source', `notes'), skip = 1)
+\#\#--------------------------------------------------------
+
+\hypertarget{part-iii-data-manipulations-and-writing-data-files}{%
+\subsection{Part III: Data manipulations and writing data
+files}\label{part-iii-data-manipulations-and-writing-data-files}}
+
+\textcolor{red}{\textbf{/2.5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  There are a lot of variables and information in the data dictionary.
+  Let's narrow it down to include just the variables we're interested
+  in. To help prepare you for this, first perform the following
+  investigations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Use \texttt{names()} to print the column names of
+    \texttt{college\_scorecard\_df} (i.e., our variables of interest)
+  \item
+    Use \texttt{str()} to investigate the structure of the
+    \texttt{var\_name} column in \texttt{college\_scorecard\_dict}
+    (\emph{Hint}: Notice that the variable names in the data dictionary
+    are all capitalized)
+  \end{itemize}
+\end{enumerate}
+
+\#\#------------------------------------------------------------
+names(college\_scorecard\_df) \#``instnm'' ``control''
+``tuitionfee\_in'' ``tuitionfee\_out'' ``md\_earn\_wne\_p10''
+str(college\_scorecard\_dict\$var\_name) \#chr {[}1:2301{]} ``UNITID''
+``OPEID'' ``OPEID6'' ``INSTNM'' ``CITY'' ``STABBR'' ``ZIP''
+``ACCREDAGENCY'' \ldots{}
+\#\#------------------------------------------------------------
+
+\begin{verbatim}
+Now, create a new object called `college_scorecard_dict_subset` from `college_scorecard_dict` where you:
+
+- Select only the variables: `var_name, var_label, val_name, val_label`
+- Mutate the `var_name` variable so that the variable names contained in this column are all lowercase (_Hint_: Use the `str_to_lower()` function to help)
+- Filter the dataframe so that it only contains variables that are in `college_scorecard_df` (_Hint_: Use `names()` to get the variables in `college_scorecard_df`, and use `%in%` to help filter for only those variables)
+\end{verbatim}
+
+\#\#----------------------------------------------------------------------
+college\_scorecard\_dict\_subset \textless- college\_scorecard\_dict
+\%\textgreater\% select(var\_name, var\_label, val\_name, val\_label)
+\%\textgreater\% mutate(var\_name = str\_to\_lower(var\_name))
+\%\textgreater\% filter(var\_name \%in\% names(college\_scorecard\_df))
+\#\#----------------------------------------------------------------------
+
+\textcolor{red}{\textbf{/1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Take a look at the \texttt{college\_scorecard\_dict\_subset} object
+  you created in the previous step. You can do this by running
+  \texttt{View(college\_scorecard\_dict\_subset)} in the
+  \textbf{Console} tab (bottom left panel of R Studio) or clicking on
+  the dataframe name under the \textbf{Environment} tab (top right panel
+  of R Studio). You should see the data dictionary information for the
+  variables in your \texttt{college\_scorecard\_df}.
+
+  Using the information from \texttt{college\_scorecard\_dict\_subset},
+  create a new dataframe called
+  \texttt{college\_scorecard\_df\_analysis} from
+  \texttt{college\_scorecard\_df} where you add the following labels:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Variable labels for the 5 variables:
+    \texttt{instnm,\ control,\ tuitionfee\_in,\ tuitionfee\_out,\ md\_earn\_wne\_p10}
+    (\emph{Hint}: Use \texttt{set\_variable\_labels()} to add variable
+    labels)
+  \item
+    Value labels to the \texttt{control} variable (\emph{Hint}: Use
+    \texttt{set\_value\_labels()} to add value labels)
+  \end{itemize}
+\end{enumerate}
+
+\#\#---------------------------------------------------------------------
+college\_scorecard\_df\_analysis \textless- college\_scorecard\_df
+\%\textgreater\% set\_variable\_labels(instnm = ``Institution name'',
+control = ``Control of institution'', tuitionfee\_in = ``In-state
+tuition and fees'', tuitionfee\_out = ``Out-of-state tuition and fees'',
+md\_earn\_wne\_p10 = ``Median earnings of students working and not
+enrolled 10 years after entry'') \%\textgreater\%
+set\_value\_labels(control = c(``Public'' = 1, ``Private nonprofit'' =
+2, ``Private for-profit'' = 3))
+\#\#----------------------------------------------------------------------
+
+\textcolor{red}{\textbf{/1}}
+
+View(college\_scorecard\_dict\_subset)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Create a new column in \texttt{college\_scorecard\_df\_analysis}
+  called \texttt{school\_type} that is \texttt{1} if the institution is
+  public and \texttt{2} if it is private. We'll be using this variable
+  in the next question when we visualize the data between public and
+  private institutions.
+\end{enumerate}
+
+\#\#-----------------------------------------------------------------------
+college\_scorecard\_df\_analysis
+\textless-college\_scorecard\_df\_analysis \%\textgreater\%
+mutate(school\_type = recode(control, ``1'' = 1, ``2'' = 2, ``3'' = 2))
+\#\#------------------------------------------------------------------------
+
+\textcolor{red}{\textbf{/1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  Copy the code provided below to your script and run it. This will
+  create the following 2 scatterplots and save the plots as
+  \texttt{.png} files in your \texttt{output\_plot\_dir}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{out\_of\_state\_tuition\_earnings.png}: Shows the
+    relationship between out-of-state tuition of the institutions and
+    the median earnings of their students 10 years after completion
+  \item
+    \texttt{in\_state\_tuition\_earnings.png}: Shows the relationship
+    between in-state tuition of the institutions and the median earnings
+    of their students 10 years after completion
+  \end{itemize}
+
+  After running the provided code to save the plots, add a line of code
+  of your own that lists out the contents of your
+  \texttt{output\_plot\_dir}. Copy the output you see into your R script
+  as a comment.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot relationship between out{-}of{-}state tuition and median earnings}
+\FunctionTok{png}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_plot\_dir, }\StringTok{\textquotesingle{}out\_of\_state\_tuition\_earnings.png\textquotesingle{}}\NormalTok{))}
+\FunctionTok{ggplot}\NormalTok{(college\_scorecard\_df\_analysis, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ tuitionfee\_out, }\AttributeTok{y =}\NormalTok{ md\_earn\_wne\_p10, }\AttributeTok{color =} \FunctionTok{as.factor}\NormalTok{(school\_type))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{\textquotesingle{}School Type\textquotesingle{}}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Public\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Private\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Tuition (Out{-}of{-}State)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Earnings 10 years after completion\textquotesingle{}}\NormalTok{)}
+\FunctionTok{dev.off}\NormalTok{()}
+
+\DocumentationTok{\#\#{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\FunctionTok{png}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_plot\_dir, }\StringTok{\textquotesingle{}out\_of\_state\_tuition\_earnings.png\textquotesingle{}}\NormalTok{))}
+\FunctionTok{ggplot}\NormalTok{(college\_scorecard\_df\_analysis, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ tuitionfee\_out, }\AttributeTok{y =}\NormalTok{ md\_earn\_wne\_p10, }\AttributeTok{color =} \FunctionTok{as.factor}\NormalTok{(school\_type))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{\textquotesingle{}School Type\textquotesingle{}}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Public\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Private\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Tuition (Out{-}of{-}State)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Earnings 10 years after completion\textquotesingle{}}\NormalTok{)}
+\FunctionTok{dev.off}\NormalTok{()}
+
+\FunctionTok{png}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_plot\_dir, }\StringTok{\textquotesingle{}in\_state\_tuition\_earnings.png\textquotesingle{}}\NormalTok{))}
+\FunctionTok{ggplot}\NormalTok{(college\_scorecard\_df\_analysis, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ tuitionfee\_in, }\AttributeTok{y =}\NormalTok{ md\_earn\_wne\_p10, }\AttributeTok{color =} \FunctionTok{as.factor}\NormalTok{(school\_type))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{\textquotesingle{}School Type\textquotesingle{}}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Public\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Private\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Tuition (In{-}State)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Earnings 10 years after completion\textquotesingle{}}\NormalTok{)}
+\FunctionTok{dev.off}\NormalTok{()}
+
+\FunctionTok{list.files}\NormalTok{(output\_plot\_dir)}
+
+
+\FunctionTok{saveRDS}\NormalTok{(college\_scorecard\_df\_analysis, }\AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(output\_file\_dir, }\StringTok{"college\_scorecard\_dataset.RDS"}\NormalTok{))}
+\FunctionTok{save}\NormalTok{(college\_scorecard\_df,college\_scorecard\_dict, }\AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(output\_file\_dir, }\StringTok{"college\_scorecard\_objects.RData"}\NormalTok{))}
+\FunctionTok{list.files}\NormalTok{(output\_file\_dir)}
+
+\FloatTok{1.}\NormalTok{ While an .RDS file can store only }\DecValTok{1}\NormalTok{ R object, an .RData file can store }\DecValTok{1}\NormalTok{ or more R objects.}
+\CommentTok{\# 2. When loading an object from an .RDS file, we need to assign the loaded object to retain it. }
+\CommentTok{\#    On the other hand, when loading objects from an .RData file, objects will be loaded directly to your environment without assigning.}
+
+\DocumentationTok{\#\#{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{Plot relationship between }\ControlFlowTok{in}\SpecialCharTok{{-}}\NormalTok{state tuition and median earnings}
+\FunctionTok{png}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_plot\_dir, }\StringTok{\textquotesingle{}in\_state\_tuition\_earnings.png\textquotesingle{}}\NormalTok{))}
+\FunctionTok{ggplot}\NormalTok{(college\_scorecard\_df\_analysis, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ tuitionfee\_in, }\AttributeTok{y =}\NormalTok{ md\_earn\_wne\_p10, }\AttributeTok{color =} \FunctionTok{as.factor}\NormalTok{(school\_type))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{\textquotesingle{}School Type\textquotesingle{}}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Public\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Private\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Tuition (In{-}State)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Earnings 10 years after completion\textquotesingle{}}\NormalTok{)}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Note}: These plots above were created using the R library
+\texttt{ggplot}. We won't be covering plotting in this course this
+quarter, but if you are interested in learning more about it, here are
+some resources to get started:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://r4ds.had.co.nz/data-visualisation.html}{Data
+  visualisation chapter} from \emph{R for Data Science} by Wickham
+\item
+  \href{https://anyone-can-cook.github.io/rclass2/lectures/ggplot/ggplot.html}{Visualization
+  using ggplot2 lecture} from rclass2 last year
+\end{itemize}
+
+\textcolor{red}{\textbf{/2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  Finally, let's save some of the R objects we've created to flat files:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Save the \texttt{college\_scorecard\_df\_analysis} dataframe to a
+    file called \texttt{college\_scorecard\_dataset.RDS} in your
+    \texttt{output\_file\_dir}
+  \item
+    Save the \texttt{college\_scorecard\_df} and
+    \texttt{college\_scorecard\_dict} objects to a file called
+    \texttt{college\_scorecard\_objects.RData} in your
+    \texttt{output\_file\_dir}
+  \item
+    List the contents of \texttt{output\_file\_dir} and copy the output
+    as a comment in your script
+  \item
+    Also add a comment in your script to answer the following question:
+    What are the 2 main differences between an \texttt{.RDS} and
+    \texttt{.RData} file (in terms of saving and loading the data)?
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{part-iv-create-a-github-issue}{%
+\subsection{Part IV: Create a GitHub
+issue}\label{part-iv-create-a-github-issue}}
+
+\begin{itemize}
+\item
+  Go to the
+  \href{https://github.com/anyone-can-cook/rclass2_student_issues_w23/issues}{class
+  repository} and create a new issue.
+\item
+  Please refer to
+  \href{https://github.com/anyone-can-cook/rclass2_student_issues_w23/blob/main/README.md}{rclass2
+  student issues readme} for instructions on how to post questions or
+  things you've learned.
+\item
+  You can either:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Ask a question that you have about this problem set or the course in
+    general. Make sure to assign the instructors (@ozanj,
+    @xochilthlopez, @joycehnguy, @augias) and mention your team (e.g.,
+    @anyone-can-cook/your\_team\_name).
+  \item
+    Share something you learned from this problem set or the course.
+    Please mention your team (e.g., @anyone-can-cook/your\_team\_name).
+  \end{itemize}
+\item
+  You are also required to respond to at least one issue posted by
+  another student.
+\item
+  Paste the url to your issue here:
+\item
+  Paste the url to the issue you responded to here:
+\end{itemize}
+
+\hypertarget{submit-problem-set}{%
+\section{Submit problem set}\label{submit-problem-set}}
+
+\begin{itemize}
+\tightlist
+\item
+  Go to the \href{https://anyone-can-cook.github.io/rclass2/}{class
+  website} and under the ``Readings \& Assignments''
+  \textgreater\textgreater{} ``Week 1'' tab, click on the ``Problem set
+  1 submission link''
+\item
+  Submit your \texttt{lastname\_firstname\_ps1.R} file
+\item
+  No need to submit any other files that were created
+\end{itemize}
+
+\end{document}

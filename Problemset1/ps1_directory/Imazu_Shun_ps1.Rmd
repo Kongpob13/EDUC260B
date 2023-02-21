@@ -1,0 +1,307 @@
+---
+title: "Problem Set #1"
+# author: "Shun Imazu"
+date: "1/14/2023"
+urlcolor: blue
+output: 
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", highlight = TRUE, warning = FALSE, message = FALSE)
+```
+
+\textcolor{red}{\textbf{Grade: /18}}   
+
+install.packages("ggplot")
+library(ggplot)
+
+# Overview
+
+In this problem set, you will practice organizing files and folders for a new project. You'll also get practice reading and writing data, which are common tasks you'll likely encounter in a real-life project. From now on you'll be doing all your work in an **R script** instead of an **R Markdown file**. 
+
+## Part I: Setting up project directory and R script
+
+\textcolor{red}{\textbf{/0.5}}
+
+1. You'll create a new **RStudio project** for this problem set:
+
+    - Open up **RStudio** and on the top right corner of the window, select `New Project` under the dropdown menu
+    - Select `New Directory` then `New Project` to create a new project
+      - _Note_: Selecting `New Directory` means that the folder (i.e., directory) where the R project will live does not yet exist; thus, this step will (A) create the directory named `ps1_directory` and (B) create the file named `ps1_directory.Rproj` within that directory
+      - Alternatively, you may manually create the directory named `ps1_directory` and then select the `Existing Directory` option
+    - Fill in the name of your new project directory (e.g., `ps1_directory`), browse where you want to create the project (e.g., `Downloads` or `Documents` folder, etc.), and click `Create Project`
+    
+    ![](rstudio_project.png){width=410px}
+
+\textcolor{red}{\textbf{/0.5}}
+
+2. Download the **Problem set R script template** available under the **Syllabus & Resources** section of the [class website](https://anyone-can-cook.github.io/rclass2/) (or click [here](https://anyone-can-cook.github.io/rclass2/assets/resources/ps_template.R)). Rename the downloaded `ps_template.R` to your `lastname_firstname_ps1.R` and save it inside your newly created project directory (e.g., `ps1_directory`).
+
+\textcolor{red}{\textbf{/1}}
+
+3. Open your `lastname_firstname_ps1.R` script in **RStudio** (check the top right corner of the window to make sure you have the **Rstudio project** you created in the first question opened). Modify the header information of the R script (e.g., your name, the date, etc.), then load the `tidyverse`, `readxl`, and `labelled` libraries under the **libraries** section of the given template. Don't forget to run your code to load the libraries. (_Hint_: You can run a line of code by clicking on that line and hitting `ctrl`+`enter`/`cmd`+`enter` on the keyboard)
+
+install.packages("labelled")
+##--------------------------------------
+library(tidyverse)
+library(readxl)
+library(labelled)
+##--------------------------------------
+
+
+\textcolor{red}{\textbf{/1}}
+
+4. Next, you'll create a few subdirectories inside your project directory. Specifically, you'll create a `data` folder to contain all raw data you'll be working with and an `analysis` folder, containing the `plots` and `files` subfolders, for storing all your outputs. Your folder structure should look like this:
+
+    ```
+    ps1_directory/
+    |
+    |- data/
+    |- analysis/
+       |- plots/
+       |- files/
+    |- lastname_firstname_ps1.R
+    ```
+    
+    You can create these directories in 2 ways: (A) Using the `dir.create()` function in your **Console** or (B) Clicking on the `New Folder` button under the **Files** tab.
+    
+    ![](rstudio_folder.png)
+    
+    Once you've created the directories, use `file.path()` to create directory path objects for them under the **directory paths** section of your `lastname_firstname_ps1.R`. Specifically, create the following objects (_Hint_: Make sure to write your paths relative to your project directory, and don't forget to run these lines of code after you're done):
+    
+    - `input_data_dir`: path to `data/` folder
+    - `output_plot_dir`: path to `plots/` folder
+    - `output_file_dir`: path to `files/` folder
+
+##-------------------------------------------------------
+input_data_dir <- file.path(".", "data")
+output_plot_dir <- file.path(".", "analysis", "plots")
+output_file_dir <- file.path(".", "analysis", "files")
+##-------------------------------------------------------
+
+## Part II: Exploring directory structure and reading data files
+
+\textcolor{red}{\textbf{/1.5}}
+
+1. Now, it's time to start writing code in the main body of your `lastname_firstname_ps1.R`. Make sure to add comments in your script (i.e., lines starting with `#`) to clearly label which part/question in the problem set you are answering. For this question, your task is to write code to do each of the following:
+
+    - Print the absolute filepath of your current working directory
+    - List all folders and files in your current working directory
+    - List all folders and files inside the `analysis/` directory
+    
+    Run the code and **copy the outputs to your R script by adding them as comments under each respective line of code**.
+
+##---------------------------------------------------
+getwd()
+#"C:/Users/imaim/OneDrive/デスクトップ/23-Winter/260-Programing/Week-1/ps1_directory"
+list.files()
+#" analysis" "data" "Imazu_Shun_ps1.Rmd" "Imazu_Shun_ps1.tex" "ps1_directory.Rproj"
+list.files(path = "./analysis")
+
+
+
+\textcolor{red}{\textbf{/2.5 }}
+
+2. So far, all our subdirectories have no files in them. Let's change that! Add code to your `lastname_firstname_ps1.R` to complete the following:
+
+    - Download the data from `https://github.com/anyone-can-cook/rclass2/raw/main/data/ps2_files.zip` into your `input_data_dir`
+    - Unzip the downloaded zipped folder and make sure the files are extracted into `input_data_dir`
+    - List the contents of `input_data_dir` and copy the output as a comment in your script
+    
+##-------------------------------------------------------
+download.file(url = "https://github.com/anyone-can-cook/rclass2/raw/main/data/ps2_files.zip",  destfile = file.path(input_data_dir, "ps2_files.zip"))
+unzip(zipfile = file.path(input_data_dir, "ps2_files.zip"), exdir = input_data_dir)
+list.files(input_data_dir)
+#"college_scorecard.csv" "college_scorecard_dict.xlsx" "ps2_files.zip" 
+
+\textcolor{red}{\textbf{/1.5}}
+
+3. Read in the data from `college_scorecard.csv` and name the object `college_scorecard_df`. Specify the arguments in the function you use to read in the data so that the following criteria are met:
+
+    - Because missing values in the data are represented by `'.'`, read in the data so that these values are replaced with `NA`
+    - Read in the `control` column so that it is of `integer` type
+    
+##------------------------------------------------------
+college_scorecard_df <- read_csv(file = file.path(input_data_dir, "college_scorecard.csv"), col_types = cols(control = col_integer()),na = ".")
+##------------------------------------------------------
+
+\textcolor{red}{\textbf{/2}}
+
+4. Read in the data dictionary from `college_scorecard_dict.xlsx` and name the object `college_scorecard_dict`. Specify the arguments in the function you use to read in the data so that the following criteria are met:
+
+    - You are reading in the `institution_data_dictionary` sheet
+    - Specify the column names to be: `'var_label', 'category', 'dev_name', 'data_type', 'var_name', 'val_name', 'val_label', 'source', 'notes'`
+    - Since you've specified custom column names, you'll need to skip the first row of data you read in (i.e., the heading row)
+
+##--------------------------------------------------------    
+college_scorecard_dict <- read_excel(path = file.path(input_data_dir, "college_scorecard_dict.xlsx"), sheet = "institution_data_dictionary",
+col_names = c('var_label', 'category', 'dev_name', 'data_type',
+'var_name', 'val_name', 'val_label', 'source', 'notes'), skip = 1)
+##--------------------------------------------------------
+
+
+## Part III: Data manipulations and writing data files
+
+\textcolor{red}{\textbf{/2.5}}
+
+1. There are a lot of variables and information in the data dictionary. Let's narrow it down to include just the variables we're interested in. To help prepare you for this, first perform the following investigations:
+
+    - Use `names()` to print the column names of `college_scorecard_df` (i.e., our variables of interest)
+    - Use `str()` to investigate the structure of the `var_name` column in `college_scorecard_dict` (_Hint_: Notice that the variable names in the data dictionary are all capitalized)
+    
+##------------------------------------------------------------
+names(college_scorecard_df)
+#"instnm"  "control" "tuitionfee_in" "tuitionfee_out"  "md_earn_wne_p10"
+str(college_scorecard_dict$var_name)
+#chr [1:2301] "UNITID" "OPEID" "OPEID6" "INSTNM" "CITY" "STABBR" "ZIP" "ACCREDAGENCY" ...
+##------------------------------------------------------------
+
+
+    Now, create a new object called `college_scorecard_dict_subset` from `college_scorecard_dict` where you:
+
+    - Select only the variables: `var_name, var_label, val_name, val_label`
+    - Mutate the `var_name` variable so that the variable names contained in this column are all lowercase (_Hint_: Use the `str_to_lower()` function to help)
+    - Filter the dataframe so that it only contains variables that are in `college_scorecard_df` (_Hint_: Use `names()` to get the variables in `college_scorecard_df`, and use `%in%` to help filter for only those variables)
+
+##----------------------------------------------------------------------
+college_scorecard_dict_subset <- college_scorecard_dict %>%
+ select(var_name, var_label, val_name, val_label) %>%
+ mutate(var_name = str_to_lower(var_name)) %>%
+ filter(var_name %in% names(college_scorecard_df))
+##----------------------------------------------------------------------
+
+
+
+
+\textcolor{red}{\textbf{/1}}
+
+2. Take a look at the `college_scorecard_dict_subset` object you created in the previous step. You can do this by running `View(college_scorecard_dict_subset)` in the **Console** tab (bottom left panel of R Studio) or clicking on the dataframe name under the **Environment** tab (top right panel of R Studio). You should see the data dictionary information for the variables in your `college_scorecard_df`.
+
+    Using the information from `college_scorecard_dict_subset`, create a new dataframe called `college_scorecard_df_analysis` from `college_scorecard_df` where you add the following labels:
+    
+    - Variable labels for the 5 variables: `instnm, control, tuitionfee_in, tuitionfee_out, md_earn_wne_p10` (_Hint_: Use `set_variable_labels()` to add variable labels)
+    - Value labels to the `control` variable (_Hint_: Use `set_value_labels()` to add value labels)
+    
+##---------------------------------------------------------------------
+college_scorecard_df_analysis <- college_scorecard_df %>% 
+  set_variable_labels(instnm = "Institution name", 
+                      control = "Control of institution",
+                      tuitionfee_in = "In-state tuition and fees",
+                      tuitionfee_out = "Out-of-state tuition and fees",
+                      md_earn_wne_p10 = "Median earnings of students working and not enrolled 10 years after entry") %>% 
+  set_value_labels(control = c("Public" = 1, 
+                               "Private nonprofit" = 2, 
+                               "Private for-profit" = 3))
+##----------------------------------------------------------------------
+
+
+\textcolor{red}{\textbf{/1}}
+
+View(college_scorecard_dict_subset)
+
+3. Create a new column in `college_scorecard_df_analysis` called `school_type` that is `1` if the institution is public and `2` if it is private. We'll be using this variable in the next question when we visualize the data between public and private institutions.
+
+##-----------------------------------------------------------------------
+college_scorecard_df_analysis <-college_scorecard_df_analysis %>%
+ mutate(school_type = recode(control, 
+                       "1" = 1,
+                       "2" = 2,
+                       "3" = 2))
+##------------------------------------------------------------------------
+
+
+\textcolor{red}{\textbf{/1}}
+
+4. Copy the code provided below to your script and run it. This will create the following 2 scatterplots and save the plots as `.png` files in your `output_plot_dir`:
+
+    - `out_of_state_tuition_earnings.png`: Shows the relationship between out-of-state tuition of the institutions and the median earnings of their students 10 years after completion
+    - `in_state_tuition_earnings.png`: Shows the relationship between in-state tuition of the institutions and the median earnings of their students 10 years after completion
+    
+    After running the provided code to save the plots, add a line of code of your own that lists out the contents of your `output_plot_dir`. Copy the output you see into your R script as a comment.
+
+```r
+# Plot relationship between out-of-state tuition and median earnings
+png(file.path(output_plot_dir, 'out_of_state_tuition_earnings.png'))
+ggplot(college_scorecard_df_analysis, aes(x = tuitionfee_out, y = md_earn_wne_p10, color = as.factor(school_type))) +
+  geom_point() +
+  geom_smooth() +
+  scale_color_discrete(name = 'School Type', labels = c('Public', 'Private')) +
+  xlab('Tuition (Out-of-State)') + ylab('Earnings 10 years after completion')
+dev.off()
+
+##-------------------------------------------------------------------
+png(file.path(output_plot_dir, 'out_of_state_tuition_earnings.png'))
+ggplot(college_scorecard_df_analysis, aes(x = tuitionfee_out, y = md_earn_wne_p10, color = as.factor(school_type))) +
+  geom_point() +
+  geom_smooth() +
+  scale_color_discrete(name = 'School Type', labels = c('Public', 'Private')) +
+  xlab('Tuition (Out-of-State)') + ylab('Earnings 10 years after completion')
+dev.off()
+
+png(file.path(output_plot_dir, 'in_state_tuition_earnings.png'))
+ggplot(college_scorecard_df_analysis, aes(x = tuitionfee_in, y = md_earn_wne_p10, color = as.factor(school_type))) +
+  geom_point() +
+  geom_smooth() +
+  scale_color_discrete(name = 'School Type', labels = c('Public', 'Private')) +
+  xlab('Tuition (In-State)') + ylab('Earnings 10 years after completion')
+dev.off()
+
+list.files(output_plot_dir)
+
+
+saveRDS(college_scorecard_df_analysis, file = file.path(output_file_dir, "college_scorecard_dataset.RDS"))
+save(college_scorecard_df,college_scorecard_dict, file = file.path(output_file_dir, "college_scorecard_objects.RData"))
+list.files(output_file_dir)
+
+1. While an .RDS file can store only 1 R object, an .RData file can store 1 or more R objects.
+# 2. When loading an object from an .RDS file, we need to assign the loaded object to retain it. 
+#    On the other hand, when loading objects from an .RData file, objects will be loaded directly to your environment without assigning.
+
+##--------------------------------------------------------------------------
+Plot relationship between in-state tuition and median earnings
+png(file.path(output_plot_dir, 'in_state_tuition_earnings.png'))
+ggplot(college_scorecard_df_analysis, aes(x = tuitionfee_in, y = md_earn_wne_p10, color = as.factor(school_type))) +
+  geom_point() +
+  geom_smooth() +
+  scale_color_discrete(name = 'School Type', labels = c('Public', 'Private')) +
+  xlab('Tuition (In-State)') + ylab('Earnings 10 years after completion')
+dev.off()
+```
+
+_Note_: These plots above were created using the R library `ggplot`. We won't be covering plotting in this course this quarter, but if you are interested in learning more about it, here are some resources to get started:
+
+- [Data visualisation chapter](https://r4ds.had.co.nz/data-visualisation.html) from _R for Data Science_ by Wickham
+- [Visualization using ggplot2 lecture](https://anyone-can-cook.github.io/rclass2/lectures/ggplot/ggplot.html) from rclass2 last year
+
+\textcolor{red}{\textbf{/2}}
+
+5. Finally, let's save some of the R objects we've created to flat files:
+
+    - Save the `college_scorecard_df_analysis` dataframe to a file called `college_scorecard_dataset.RDS` in your `output_file_dir`
+    - Save the `college_scorecard_df` and `college_scorecard_dict` objects to a file called `college_scorecard_objects.RData` in your `output_file_dir`
+    - List the contents of `output_file_dir` and copy the output as a comment in your script
+    - Also add a comment in your script to answer the following question: What are the 2 main differences between an `.RDS` and `.RData` file (in terms of saving and loading the data)?
+
+## Part IV: Create a GitHub issue   
+
+
+- Go to the [class repository](https://github.com/anyone-can-cook/rclass2_student_issues_w23/issues) and create a new issue.
+- Please refer to [rclass2 student issues readme](https://github.com/anyone-can-cook/rclass2_student_issues_w23/blob/main/README.md) for instructions on how to post questions or things you've learned.
+- You can either:
+  - Ask a question that you have about this problem set or the course in general. Make sure to assign the instructors (@ozanj, @xochilthlopez, @joycehnguy, @augias) and mention your team (e.g., @anyone-can-cook/your_team_name).
+  - Share something you learned from this problem set or the course. Please mention your team (e.g., @anyone-can-cook/your_team_name).
+- You are also required to respond to at least one issue posted by another student.
+
+- Paste the url to your issue here: 
+- Paste the url to the issue you responded to here: 
+
+# Submit problem set  
+
+- Go to the [class website](https://anyone-can-cook.github.io/rclass2/) and under the "Readings & Assignments" >> "Week 1" tab, click on the "Problem set 1 submission link"
+- Submit your `lastname_firstname_ps1.R` file
+- No need to submit any other files that were created
